@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Untitled Idle RPG Game</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 class="title">Untitled Idle RPG Game</h1>
+    <div class="ui">
+        <div class="panel inventory">
+            <h1>Inventory</h1>
+            <hr>
+            <p id="inventory"></p>
+        </div>
+        <div class="panel stats">
+            <h1>Stats</h1>
+            <hr>
+            <p>
+                Level: 1<br>
+                Health: 100<br>
+                Attack: 50
+            </p>
+        </div>
+    </div>
+    <div class="game">
+        <div class="game-panel">
+            <h1>Expedition <span id="expedition-num">1</span></h1>
+            <button id="btn-start" class="btn-default btn-explore">Start</button>
+            <div class="expedition-info">
+                <div>
+                    <p>
+                        <u>Expedition Info</u><br>
+                        Difficulty: Very Easy<br>
+                        Time: 15 Seconds<br>
+                        Rewards: Low<br>
+                        Battles: 2
+                    </p>
+                </div>
+                <div>
+                    <p><u>Expedition Log</u></p>
+                    <div class="log">
+                        <p id="log">
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const log = document.getElementById('log');
+        const start = document.getElementById('btn-start')
+        const inventoryPanel = document.getElementById('inventory')
+
+        const itemList = ["Hat", "Sword"]
+        const inventory = [];
+
+        function updateInventory(item) {
+            inventory.push(item);
+            const fullInventory = inventory.join("<br>");
+            inventoryPanel.innerHTML = fullInventory;
+        }
+
+        const stats = {};
+        stats.hp = 100
+        stats.level = 1
+        stats.attack = 50
+
+        // Start expedition on button press
+        start.addEventListener("click", () => {
+            expedition1();
+        })
+
+        const explog = [];
+
+        // Define writeLog function
+        // This code is terrible and should never be used again
+        function writeLog(str) {
+            explog.push(str);
+            const fullLog = explog.join("<br>");
+            log.innerHTML = fullLog;
+        }
+        
+        // Handle different events
+        async function event(type) {
+            switch (type) {
+                case 1:
+                    var monsterHP = Math.floor(Math.random() * 100);
+
+                    function attack() {
+                        const damage = Math.floor(Math.random() * stats.attack)
+
+                        monsterHP = monsterHP - damage;
+                        writeLog("You attack for " + damage + " health! The monster has " + monsterHP + " health.")
+                    }
+
+                    writeLog("You ran into a monster.");
+
+                    setTimeout(function(){
+                        
+                        writeLog("The monster has " + monsterHP + " health." );
+
+                        while (monsterHP > 0) {
+                            attack();
+                        }
+                        writeLog("You won!")
+
+                        const itemNum = Math.floor(Math.random()*itemList.length);
+
+                        const reward = itemList[itemNum];
+
+                        writeLog("You found a " + reward.toLowerCase() + "! Added to your inventory.");
+                        updateInventory(reward);
+                        return("event completed");
+                    }, 2000);
+
+
+                    break;
+                case 2:
+
+                    break;
+            }
+        }
+
+        // Define Expedition
+        async function expedition1() {
+            writeLog("Expedition starting!")
+
+            setTimeout(function(){
+                event(1);
+            }, 2000);
+
+            setTimeout(function(){
+                event(1);
+            }, 6000);
+
+            setTimeout(function(){
+                writeLog("Expedition Complete!<br><br>")
+            }, 9000);
+            
+        }
+    </script>
+</body>
+</html>
