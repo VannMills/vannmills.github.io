@@ -49,6 +49,7 @@ h1 {
     color: black;
     text-align: left;
     border: 40px white solid;
+    overflow: scroll;
 }
 
 .btn-default {
@@ -88,7 +89,7 @@ h1 {
 .log {
     border: 2px solid black;
     height: 180px;
-    width: 830px;
+    width: 800px;
     overflow: scroll;
 }
 
